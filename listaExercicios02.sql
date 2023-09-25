@@ -29,3 +29,19 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+-- 3. Contagem de Livros por Categoria:
+
+DELIMITER //
+
+CREATE PROCEDURE sp_ContarLivrosPorCategoria(IN categoria_nome VARCHAR(100), OUT total_livros INT)
+BEGIN
+    SELECT COUNT(*) INTO total_livros
+    FROM Livro
+    JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoria_nome;
+END//
+
+DELIMITER ;
+
