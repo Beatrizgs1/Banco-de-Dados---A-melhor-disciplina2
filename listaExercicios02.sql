@@ -45,3 +45,27 @@ END//
 
 DELIMITER ;
 
+
+-- 4. Verificação de Livros por Categoria:
+
+DELIMITER //
+
+CREATE PROCEDURE sp_VerificarLivrosCategoria(IN categoria_nome VARCHAR(100), OUT possui_livros BOOLEAN)
+BEGIN
+    DECLARE total INT;
+    
+    SELECT COUNT(*) INTO total
+    FROM Livro
+    JOIN Categoria ON Livro.Categoria_ID = Categoria.Categoria_ID
+    WHERE Categoria.Nome = categoria_nome;
+    
+    IF total > 0 THEN
+        SET possui_livros = TRUE;
+    ELSE
+        SET possui_livros = FALSE;
+    END IF;
+END//
+
+DELIMITER ;
+
+
