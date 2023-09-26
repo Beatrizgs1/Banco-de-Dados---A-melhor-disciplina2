@@ -159,6 +159,22 @@ DELIMITER ;
 
 -- 9. Documentação e Comentários:
 
+-- 8. Autor Mais Antigo(escolhido):
+
+DELIMITER // ---- Define o delimitador personalizado para permitir a criação da stored procedure com um ponto e vírgula no corpo.
+
+CREATE PROCEDURE sp_AutorMaisAntigo(OUT nome_autor VARCHAR(255)) ---- Cria a stored procedure com um parâmetro de saída chamado nome_autor.
+BEGIN --  Indica o início do bloco de código da stored procedure. Todas as instruções dentro da stored procedure serão executadas em conjunto quando a procedure for chamada.
+    SELECT CONCAT(Nome, ' ', Sobrenome) INTO nome_autor -- Esta é a consulta SQL que busca o nome completo do autor mais antigo. Ela concatena o campo Nome com um espaço em branco e o campo Sobrenome para formar o nome completo. O resultado é armazenado na variável nome_autor, que é o parâmetro de saída da stored procedure.
+    FROM Autor -- Especifica que a consulta será feita na tabela Autor. É nesta tabela que estão armazenadas as informações dos autores.
+    ORDER BY Data_Nascimento ASC -- Ordena os autores em ordem crescente de Data_Nascimento.
+    LIMIT 1;  -- Limita o resultado a apenas um registro (o autor mais antigo).
+END// -- Finaliza a definição da stored procedure.
+
+DELIMITER ; -- Restaura o delimitador padrão (ponto e vírgula) para encerrar a definição da stored procedure.
+
+
+
 
 
 
