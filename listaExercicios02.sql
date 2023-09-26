@@ -114,4 +114,32 @@ END//
 DELIMITER ;
 
 
+-- 7. Adição de Livro com Tratamento de Erros:
+
+DELIMITER //
+
+CREATE PROCEDURE sp_AdicionarLivro(
+    IN titulo_livro VARCHAR(255),
+    IN editora_id INT,
+    IN ano_publicacao INT,
+    IN numero_paginas INT,
+    IN categoria_id INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Erro ao adicionar o livro: Título já existe.';
+    END;
+
+    START TRANSACTION;
+    INSERT INTO Livro (Titulo, Editora_ID, Ano_Publicacao, Numero_Paginas, Categoria_ID)
+    VALUES (titulo_livro, editora_id, ano_publicacao, numero_paginas, categoria_id);
+    COMMIT;
+END//
+
+DELIMITER ;
+
+
 
